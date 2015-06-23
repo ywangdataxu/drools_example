@@ -1,0 +1,7 @@
+<kmodule xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+         xmlns="http://jboss.org/kie/6.0.0/kmodule">
+  <kbase name="apertura" default="true" eventProcessingMode="stream" equalsBehavior="equality" declarativeAgenda="disabled" scope="javax.enterprise.context.ApplicationScoped">
+    <ksession name="aperturaStatefulKnowledgeSession" type="stateful" default="true" clockType="realtime" beliefSystem="simple" scope="javax.enterprise.context.ApplicationScoped"/>
+    <ksession name="aperturaStatelessKnowledgeSession" type="stateless" default="true" clockType="realtime" beliefSystem="simple" scope="javax.enterprise.context.ApplicationScoped"/>
+  </kbase>
+</kmodule>
