@@ -15,7 +15,7 @@ public class FireAlarmRule {
         KieSession kSession = kContainer.newKieSession();
 
         String[] names = { "kitchen", "bedroom", "office", "livingroom" };
-        Map<String, Room> name2room = new HashMap<>();
+        Map<String, Room> name2room = new HashMap<String, Room>();
         for (String name : names) {
             Room room = new Room(name);
             name2room.put(name, room);
