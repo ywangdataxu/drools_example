@@ -1,0 +1,12 @@
+package com.drools.cashflow;
+
+rule "increase balance for credits"
+when
+    $ap: AccountPeriod()
+    $acc: Account($accountNum: accountNum)
+    CashFlow(type == Type.CREDIT, accountNum == $accountNum, date >= $ap.start && <= $ap.end, $amount: amount)
+then
+    System.out.println("Before update. The balance is " + $acc.getBalance());
+    $acc.setBalance($acc.getBalance() + $amount);
+    System.out.println("After update. The balance is " + $acc.getBalance());
+end;
