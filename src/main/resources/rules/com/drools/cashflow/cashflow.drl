@@ -1,12 +1,39 @@
 package com.drools.cashflow;
 
-rule "increase balance for credits"
+rule "increase balance for credits" agenda-group "calculation"
 when
     $ap: AccountPeriod()
     $acc: Account($accountNum: accountNum)
     CashFlow(type == Type.CREDIT, accountNum == $accountNum, date >= $ap.start && <= $ap.end, $amount: amount)
 then
-    System.out.println("Before update. The balance is " + $acc.getBalance());
+    System.out.println("Before credit. The balance is " + $acc.getBalance());
     $acc.setBalance($acc.getBalance() + $amount);
-    System.out.println("After update. The balance is " + $acc.getBalance());
+    System.out.println("After credit. The balance is " + $acc.getBalance());
 end;
+
+rule "decrease balance for debits" agenda-group "calculation"
+when
+    $ap: AccountPeriod()
+    $acc: Account($accountNum: accountNum)
+    CashFlow(type == Type.DEBIT, accountNum == $accountNum, date >= $ap.start && <= $ap.end, $amount: amount)
+then
+    System.out.println("Before debit. The balance is " + $acc.getBalance());
+    $acc.setBalance($acc.getBalance() - $amount);
+    System.out.println("After debit. The balance is " + $acc.getBalance());
+end;
+
+rule "Print balance for AccountPeriod" salience -50 agenda-group "calculation"
+when
+    $ap: AccountPeriod()
+    $acc: Account()
+then
+    System.out.println($acc.getAccountNum() + ": " + $acc.getBalance());
+end
+
+rule "Final report" agenda-group "report"
+when
+    $ap: AccountPeriod()
+    $acc: Account()
+then
+    System.out.println("Final report " + $acc.getAccountNum() + ": " + $acc.getBalance());
+end
